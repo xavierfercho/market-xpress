@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrarse | Market Xpress</title>
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/registrarse.css" />
+  </head>
+  <body>
+
+    <!-- FONDO DECORATIVO -->
+    <aside class="fondo-creativo" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+      <span class="malla-puntos"></span>
+    </aside>
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+      <a class="logo" href="index.html">Market Xpress</a>
+      <nav class="menu" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="carrito.html" class="cart-link">
+          🛒 Carrito
+          <span id="cuenta">0</span>
+        </a>
+        <a href="login.html" class="btn-ingresar">Ingresar</a>
+      </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenedor-principal">
+      <article class="tarjeta-registro anim-entrada">
+        <header>
+          <mark class="badge-bienvenida">✨ Únete gratis</mark>
+          <h1>Crear cuenta</h1>
+          <p class="subtitulo-registro">Disfruta de la experiencia más rápida e inteligente al comprar</p>
+        </header>
+
+        <form id="form-registro" onsubmit="procesarRegistro(event)">
+          
+          <section class="grupo-campo">
+            <label for="nombre">Nombre completo</label>
+            <span class="input-contenedor">
+              <span class="icono-input" aria-hidden="true">👤</span>
+              <input 
+                type="text" 
+                id="nombre" 
+                placeholder="Ej. Juan Pérez" 
+                autocomplete="name"
+                required 
+              />
+            </span>
+          </section>
+
+          <section class="grupo-campo">
+            <label for="email">Correo electrónico</label>
+            <span class="input-contenedor">
+              <span class="icono-input" aria-hidden="true">✉️</span>
+              <input 
+                type="email" 
+                id="email" 
+                placeholder="ejemplo@correo.com" 
+                autocomplete="email"
+                required 
+              />
+            </span>
+          </section>
+
+          <section class="grupo-campo">
+            <label for="password">Contraseña (mínimo 6 caracteres)</label>
+            <span class="input-contenedor">
+              <span class="icono-input" aria-hidden="true">🔒</span>
+              <input 
+                type="password" 
+                id="password" 
+                placeholder="••••••••" 
+                minlength="6"
+                autocomplete="new-password"
+                oninput="evaluarFuerzaContrasena(this.value)"
+                required 
+              />
+            </span>
+            <div class="medidor-fuerza">
+              <div id="barra-fuerza" class="barra-fuerza"></div>
+            </div>
+            <span id="texto-fuerza" class="texto-fuerza">Nivel de seguridad</span>
+          </section>
+
+          <section class="grupo-campo">
+            <label for="confirm-password">Repite la contraseña</label>
+            <span class="input-contenedor">
+              <span class="icono-input" aria-hidden="true">🔑</span>
+              <input 
+                type="password" 
+                id="confirm-password" 
+                placeholder="••••••••" 
+                minlength="6"
+                autocomplete="new-password"
+                required 
+              />
+            </span>
+          </section>
+
+          <section class="grupo-checkbox">
+            <label class="contenedor-check">
+              <input type="checkbox" id="terminos" required />
+              <span class="check-custom">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="texto-check">
+                Acepto los <a href="javascript:void(0)" onclick="abrirModalTerminos()">Términos y Condiciones</a>
+              </span>
+            </label>
+          </section>
+
+          <button type="submit" class="boton-registrarse">
+            <span>Crear mi cuenta</span>
+            <svg class="icono-flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </form>
+
+        <footer>
+          <p class="pie-tarjeta">
+            ¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a>
+          </p>
+        </footer>
+      </article>
+    </main>
+
+    <!-- MODAL TÉRMINOS Y CONDICIONES -->
+    <aside id="modal-terminos" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true">
+      <article class="modal-tarjeta modal-terminos-box">
+        <header class="modal-header-terminos">
+          <span class="modal-icono-mini" role="img" aria-label="Documento">📜</span>
+          <h2>Términos y Condiciones</h2>
+        </header>
+        <section class="modal-cuerpo-terminos">
+          <p><strong>Bienvenido a Market Xpress.</strong> Por favor revisa nuestras políticas:</p>
+          <ul class="lista-terminos">
+            <li><strong>👤 Datos de Cuenta:</strong> Tu información es confidencial.</li>
+            <li><strong>🚚 Envíos y Pagos:</strong> Tarifa fija transparente de $2.00 por envío.</li>
+            <li><strong>💵 Métodos Aceptados:</strong> Efectivo contra entrega y tarjetas autorizadas.</li>
+            <li><strong>🔒 Seguridad:</strong> Estándares avanzados de protección de datos.</li>
+          </ul>
+        </section>
+        <button type="button" class="boton-modal-continuar" onclick="aceptarTerminosModal()">
+          <span>Aceptar y Continuar</span>
+        </button>
+      </article>
+    </aside>
+
+    <!-- MODAL ATENCIÓN / ERROR -->
+    <aside id="modal-error" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true">
+      <article class="modal-tarjeta">
+        <span class="modal-icono anim-bounce" role="img" aria-label="Advertencia">⚠️</span>
+        <h2>¡Atención!</h2>
+        <p id="modal-error-mensaje" class="modal-subtitulo">
+          Las contraseñas no coinciden. Verifícalas e intenta de nuevo.
+        </p>
+        <button type="button" class="boton-modal-error" onclick="cerrarModalError()">
+          <span>Corregir e Intentar</span>
+        </button>
+      </article>
+    </aside>
+
+    <!-- MODAL REGISTRO EXITOSO -->
+    <aside id="modal-exito" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true">
+      <article class="modal-tarjeta">
+        <span class="modal-icono anim-pop" role="img" aria-label="Celebración">🎉</span>
+        <h2>¡Cuenta Creada!</h2>
+        <p class="modal-subtitulo">Te has registrado con éxito en <strong>Market Xpress</strong>.</p>
+
+        <section class="modal-resumen-box">
+          <p class="modal-linea">
+            <span>Nombre:</span>
+            <strong id="modal-nombre-txt">Juan Pérez</strong>
+          </p>
+          <p class="modal-linea">
+            <span>Correo:</span>
+            <strong id="modal-email-txt">correo@ejemplo.com</strong>
+          </p>
+          <p class="modal-linea">
+            <span>Estado:</span>
+            <strong class="monto-verde">Activa y Verificada ✅</strong>
+          </p>
+        </section>
+
+        <button type="button" class="boton-modal-continuar" onclick="redireccionarLogin()">
+          <span>Iniciar sesión ahora 🚀</span>
+        </button>
+      </article>
+    </aside>
+
+    <footer class="pie">
+      © 2026 Market Xpress. Todos los derechos reservados.
+    </footer>
+
+    <script>
+      function actualizarContadorCarrito() {
+        try {
+          const c = JSON.parse(localStorage.getItem("carrito")) || [];
+          const totalUnidades = c.reduce((sum, item) => sum + item.q, 0);
+          document.getElementById("cuenta").textContent = totalUnidades;
+        } catch (e) {
+          document.getElementById("cuenta").textContent = "0";
+        }
+      }
+
+      function evaluarFuerzaContrasena(val) {
+        const barra = document.getElementById("barra-fuerza");
+        const texto = document.getElementById("texto-fuerza");
+
+        if (!val) {
+          barra.style.width = "0%";
+          barra.style.backgroundColor = "#e2e8f0";
+          texto.textContent = "Nivel de seguridad";
+          return;
+        }
+
+        if (val.length < 6) {
+          barra.style.width = "30%";
+          barra.style.backgroundColor = "#ef4444";
+          texto.textContent = "Seguridad: Débil 🔴";
+        } else if (val.length >= 6 && val.length < 10) {
+          barra.style.width = "65%";
+          barra.style.backgroundColor = "#f59e0b";
+          texto.textContent = "Seguridad: Media 🟡";
+        } else {
+          barra.style.width = "100%";
+          barra.style.backgroundColor = "#10b981";
+          texto.textContent = "Seguridad: Excelente 🟢";
+        }
+      }
+
+      function abrirModalTerminos() {
+        document.getElementById("modal-terminos").style.display = "flex";
+      }
+
+      function aceptarTerminosModal() {
+        document.getElementById("terminos").checked = true;
+        document.getElementById("modal-terminos").style.display = "none";
+      }
+
+      function procesarRegistro(event) {
+        event.preventDefault();
+
+        const nombre = document.getElementById("nombre").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const pass1 = document.getElementById("password").value;
+        const pass2 = document.getElementById("confirm-password").value;
+        const terminos = document.getElementById("terminos").checked;
+
+        if (pass1 !== pass2) {
+          mostrarErrorModal("Las contraseñas no coinciden. Verifícalas e intenta de nuevo.");
+          return;
+        }
+
+        if (!terminos) {
+          mostrarErrorModal("Debes aceptar los Términos y Condiciones para continuar.");
+          return;
+        }
+
+        document.getElementById("modal-nombre-txt").textContent = nombre;
+        document.getElementById("modal-email-txt").textContent = email;
+        document.getElementById("modal-exito").style.display = "flex";
+      }
+
+      function mostrarErrorModal(mensaje) {
+        document.getElementById("modal-error-mensaje").textContent = mensaje;
+        document.getElementById("modal-error").style.display = "flex";
+      }
+
+      function cerrarModalError() {
+        document.getElementById("modal-error").style.display = "none";
+      }
+
+      function redireccionarLogin() {
+        window.location.href = "login.html";
+      }
+
+      actualizarContadorCarrito();
+    </script>
+  </body>
+</html>
